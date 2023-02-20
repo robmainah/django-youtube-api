@@ -1,3 +1,7 @@
 .env
 
 youtube-api-venv
+project_settings/
+
+*.log
+__pycache__/
