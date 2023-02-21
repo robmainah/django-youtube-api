@@ -4,7 +4,7 @@
 {% block content %}
 <!-- <main class="border border-slate-600 mt-4 p-2"> -->
 <ul>
-    {% for video in videos %}
+    {% for video in videos.items %}
         <li class="border border-slate-700 mt-2">
             <a href="{% url 'single-video' video.id.videoId %}" class="text-slate-200 text-xl p-2 flex">
                 <img class="mr-3" src="{{ video.snippet.thumbnails.default.url }}" alt="{{ video.snippet.title }}">
