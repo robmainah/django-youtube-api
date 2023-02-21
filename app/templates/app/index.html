@@ -5,15 +5,24 @@
 <!-- <main class="border border-slate-600 mt-4 p-2"> -->
 <ul>
     {% for video in videos.items %}
-        <li class="border border-slate-700 mt-2">
+        <li class=" border-slate-700 mt-1">
             <a href="{% url 'single-video' video.id.videoId %}" class="text-slate-200 text-xl p-2 flex">
-                <img class="mr-3" src="{{ video.snippet.thumbnails.default.url }}" alt="{{ video.snippet.title }}">
+                <img class="mr-3 rounded h-44" src="{{ video.snippet.thumbnails.medium.url }}" alt="{{ video.snippet.title }} image">
 
                 <div class="flex flex-col">
                     {% autoescape off %}
-                        <span>{{ video.snippet.title }}</span>
+                        <span class="text-base font-medium">{{ video.snippet.title }}</span>
                     {% endautoescape %}
-                    <small class="text-gray-500 text-sm">{{ video.snippet.publishTime|naturaltime }}</small>
+                    
+                    <small class="text-gray-400 text-sm mt-1">{{ video.snippet.publishTime|naturaltime }}</small>
+
+                    <div class="flex my-2">
+                        <img class="h-7 rounded-full mr-1"
+                            src="{{ video.channelData.snippet.thumbnails.default.url }}"
+                            alt="{{ video.snippet.channelTitle }} image">
+                        <small class="text-gray-400 text-sm">{{ video.snippet.channelTitle }}</small>
+                    </div>
+                    <small class="text-gray-400 text-sm">{{ video.snippet.description|slice:":98" }}...</small>
                 </div>
             </a>
         </li>

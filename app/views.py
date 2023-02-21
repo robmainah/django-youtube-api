@@ -27,6 +27,13 @@ def parse_datetime(date_time):
     return datetime.fromisoformat(date_time)
 
 
+def get_video_channel_data(channel_id):
+    youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
+    return youtube.channels().list(
+        id=channel_id, part='snippet',
+    ).execute()
+    
+
 def home(request):
     filename = 'videos_data.pickle'
 
@@ -37,12 +44,14 @@ def home(request):
         youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
         videos = youtube.search().list(
             part='snippet', type='video', q=term, maxResults=50
-        ).execute()
+        ).execute()        
 
         for video in videos['items']:
+            video['channelData'] = get_video_channel_data(video['snippet']['channelId'])['items'][0]
+            # print(video['channelData'])
             video['snippet']['publishTime'] = parse_datetime(video['snippet']['publishTime'])
-        
-        save_data_to_pickle(filename, videos)        
+
+        save_data_to_pickle(filename, videos)
 
     return render(request, 'app/index.html', {'videos': videos})
     
