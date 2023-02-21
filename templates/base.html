@@ -14,17 +14,28 @@
 
 <body class="bg-slate-900 text-white">
     <div class="container p-4 mx-auto">
-        <nav class="py-4 bg-white shadow md:flex md:items-center
+        <nav class="border-b-2 border-gray-600 py-4 shadow md:flex md:items-center
                 md:justify-between">
             <div class="flex justify-between items-center">
-                <span class="text-2xl font-[Poppins]">
-                    <img class="h-8 inline cursor-pointer" src="{% static 'media/images/tailwind-logo.png' %}">
-                    tailwind
-                </span>
+                <a href="{% url 'home' %}">
+                    <span class="text-2xl font-[Poppins]">
+                        <img class="h-8 inline cursor-pointer" src="{% static 'media/images/tailwind-logo.png' %}">
+                        tailwind
+                    </span>
+                </a>
         
                 <!-- <span class="text-3xl cursor-pointer mx-2 md:hidden block">
                         <ion-icon name="menu-outline" onclick="Menu(this)"></ion-icon>
                     </span> -->
+            </div>
+            <div class="">
+                <form method="get">
+                    <input type="search" name="search" placeholder="Search" class="p-2 border border-slate-700 rounded bg-slate-900 focus:outline-none focus:border-sky-500">
+
+                    <button type="submit" class="py-2 px-3 border border-slate-700 rounded">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </button>
+                </form>
             </div>
             <!-- <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute 
                     bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7
@@ -47,7 +58,9 @@
                 </ul> -->
         </nav>
 
-        {% block content %} {% endblock %}
+        <div class="mt-4">
+            {% block content %} {% endblock %}
+        </div>
     </div>
 
     {% include 'layouts/js.html' %}

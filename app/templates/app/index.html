@@ -1,8 +1,14 @@
-{% extends 'layouts/base.html' %}
-{% load static %}
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="text-blue-600">
-    hello sds
-</div>
+<!-- <main class="border border-slate-600 mt-4 p-2"> -->
+<ul>
+    {% for video in videos %}
+        <li class="border border-slate-700 mt-2 px-2">
+            <a href="{% url 'single-video' video.id.videoId %}" class="text-slate-200 text-xl p-2 flex justify-left">
+                {{ video.snippet.title }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
 {% endblock %}
