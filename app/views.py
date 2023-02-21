@@ -1,22 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-# from googleapiclient.discovery import build
-import environ
+# from django.http import HttpResponse
 import pickle
 import os
-from .services.SearchVideos import search_videos
+import environ
+from googleapiclient.discovery import build
+
 
 env = environ.Env()
 environ.Env.read_env()
 
-
-def save_all_videos_to_pickle(filename, videos):
+def save_data_to_pickle(filename, videos):
     file = open(filename, 'ab')
     pickle.dump(videos, file)
     file.close()
     
 
-def load_all_videos_from_pickle(filename):
+def load_data_from_pickle(filename):
     file = open(filename, 'rb')
     videos = pickle.load(file)
     file.close()
@@ -24,15 +23,22 @@ def load_all_videos_from_pickle(filename):
 
 
 def home(request):
-    filename = 'all_videos.pickle'
+    filename = 'videos_data.pickle'
 
     if os.path.exists(filename):
-        videos = load_all_videos_from_pickle(filename)
+        videos = load_data_from_pickle(filename)
     else:
         term = 'avengers'
-        videos = search_videos.search(env('YOUTUBE_API_KEY'), term)
+        youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
+        videos = youtube.search().list(
+            q=term,
+            part='snippet',
+            type='video',
+            maxResults=50
+        ).execute()
+
         # print(videos['items'])
-        save_all_videos_to_pickle(filename, videos)
+        save_data_to_pickle(filename, videos)
 
     return render(request, 'app/index.html', {'videos': videos['items']})
     
@@ -40,5 +46,21 @@ def home(request):
 
 
 def single_video(request, video_id):
-    print("dddd", video_id)
-    return render(request, 'app/detail.html')
+    filename = f'video_{video_id}.pickle'
+
+    if os.path.exists(filename):
+        video = load_data_from_pickle(filename)
+    else:
+        youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
+        video = youtube.videos().list(
+            part='snippet, statistics, player',
+            id=video_id,
+            maxResults=1,
+        ).execute()
+
+        print(video['items'])
+        save_data_to_pickle(filename, video)
+
+    return render(request, 'app/detail.html', {'video': video['items'][0]})
+
+    # return render(request, 'app/detail.html')

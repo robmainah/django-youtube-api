@@ -6,7 +6,9 @@
     {% for video in videos %}
         <li class="border border-slate-700 mt-2 px-2">
             <a href="{% url 'single-video' video.id.videoId %}" class="text-slate-200 text-xl p-2 flex justify-left">
-                {{ video.snippet.title }}
+                {% autoescape off %}
+                    {{ video.snippet.title }}
+                {% endautoescape %}
             </a>
         </li>
     {% endfor %}
