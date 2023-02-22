@@ -90,7 +90,7 @@ def search(request):
     else:        
         youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
         videos = youtube.search().list(
-            part='snippet', type='video', q=term, maxResults=10, regionCode='KEN'
+            part='snippet', type='video', q=term, maxResults=10, 
         ).execute()
 
         for video in videos['items']:

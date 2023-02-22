@@ -1,7 +1,7 @@
 {% load humanize %}
 
 {% block content %}
-    <li class=" border-slate-700 mt-4 flex">
+    <li class=" border-slate-700 mt-5 flex">
         <div class="w-64 sm:w-72 mr-3">
             <a href="{% url 'single-video' video.id.videoId %}" rel="nofollow noreferrer">
                 <img class="rounded-lg h-36 sm:h-44" src="{{ video.snippet.thumbnails.medium.url }}" alt="{{ video.snippet.title }} image" title="{{ video.snippet.title }}">
