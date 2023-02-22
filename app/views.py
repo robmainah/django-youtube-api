@@ -78,7 +78,7 @@ def single_video(request, video_id):
 
 
 def search(request):
-    term = request.GET.get('q')
+    term = request.GET.get('q') # + " -citizen -ntv"
     filename = f"videos_{term}_data.pickle"
 
     if os.path.exists(filename):
