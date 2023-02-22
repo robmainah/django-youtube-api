@@ -17,11 +17,10 @@
                     <small class="text-gray-400 text-sm mt-1">{{ video.snippet.publishTime|naturaltime }}</small>
 
                     <div class="flex my-2">
-                        <img class="h-7 rounded-full mr-1"
-                            src="{{ video.channelData.snippet.thumbnails.default.url }}"
-                            alt="{{ video.snippet.channelTitle }} image">
+                        <img class="h-7 rounded-full mr-1" src="{{ video.channelData.snippet.thumbnails.default.url }}" alt="{{ video.snippet.channelTitle }} image">
                         <small class="text-gray-400 text-sm">{{ video.snippet.channelTitle }}</small>
                     </div>
+
                     <small class="text-gray-400 text-sm">{{ video.snippet.description|slice:":98" }}...</small>
                 </div>
             </a>

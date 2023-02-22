@@ -28,12 +28,12 @@
                         <ion-icon name="menu-outline" onclick="Menu(this)"></ion-icon>
                     </span> -->
             </div>
-            <div class="">
-                <form method="get">
-                    <input type="search" name="search" placeholder="Search" class="p-2 border border-slate-700 rounded bg-slate-900 focus:outline-none focus:border-sky-500">
+            <div class="static main_search flex justify-center">
+                <form method="get" class="relative w-full">
+                    <input type="search" name="q" placeholder="Search" autocomplete="off" class="p-2 border border-slate-600 rounded bg-slate-900 focus:outline-none focus:border-sky-500 w-full">
 
-                    <button type="submit" class="py-2 px-3 border border-slate-700 rounded">
-                        <ion-icon name="search-outline"></ion-icon>
+                    <button type="submit" class="right-0 pb-1 pt-2 px-3 self-center absolute bg-sky-500 rounded" title="Search">
+                        <ion-icon name="search-outline" class="text-2xl font-bold"></ion-icon>
                     </button>
                 </form>
             </div>
