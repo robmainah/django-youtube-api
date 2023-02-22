@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+        {% for video in videos.items %}
+            {% include './loop/item.html' %}
+        {% endfor %}
+    </ul>
+{% endblock %}

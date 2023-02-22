@@ -14,8 +14,7 @@
 
 <body class="bg-slate-900 text-white">
     <div class="container p-4 mx-auto">
-        <nav class="border-b-2 border-gray-600 py-4 shadow md:flex md:items-center
-                md:justify-between">
+        <nav class="border-b-2 border-gray-600 py-4 shadow md:flex md:items-center md:justify-between">
             <div class="flex justify-between items-center">
                 <a href="{% url 'home' %}">
                     <span class="text-2xl font-[Poppins]">
@@ -23,39 +22,16 @@
                         yT Filters 
                     </span>
                 </a>
-        
-                <!-- <span class="text-3xl cursor-pointer mx-2 md:hidden block">
-                        <ion-icon name="menu-outline" onclick="Menu(this)"></ion-icon>
-                    </span> -->
             </div>
             <div class="static main_search flex justify-center">
-                <form method="get" class="relative w-full">
-                    <input type="search" name="q" placeholder="Search" autocomplete="off" class="p-2 border border-slate-600 rounded bg-slate-900 focus:outline-none focus:border-sky-500 w-full">
+                <form action="{% url 'search' %}" method="get" class="relative w-full">
+                    <input type="search" name="q" placeholder="Search" value="{{ search }}" autocomplete="off" class="p-2 border border-slate-600 rounded bg-slate-900 focus:outline-none focus:border-sky-500 w-full">
 
                     <button type="submit" class="right-0 pb-1 pt-2 px-3 self-center absolute bg-sky-500 rounded" title="Search">
                         <ion-icon name="search-outline" class="text-2xl font-bold"></ion-icon>
                     </button>
                 </form>
             </div>
-            <!-- <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute 
-                    bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7
-                    md:opacity-100 opacity-0 top-[-400px] transition-all 
-                    ease-in duration-500"> -->
-            <!-- <ul class="md:flex md:items-center">
-                    <li class="mx-4 my-2 md:my-0">
-                        <a href="" class="text-xl hover:text-cyan-500 duration-500">HOME</a>
-                    </li>
-                    <li class="mx-4 my-2 md:my-0">
-                        <a href="" class="text-xl hover:text-cyan-500 duration-500">ABOUT</a>
-                    </li>
-                    <li class="mx-4 my-2 md:my-0">
-                        <a href="" class="text-xl hover:text-cyan-500 duration-500">SERVICES</a>
-                    </li>
-        
-                    <button class="bg-cyan-400 text-white font-[Poppins] duration-500 px-6 py-2 mx-4 hover:bg-cyan-500 rounded mt-3 md:mt-0">
-                        Get Started
-                    </button>
-                </ul> -->
         </nav>
 
         <div class="mt-4">

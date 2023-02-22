@@ -75,3 +75,27 @@ def single_video(request, video_id):
     return render(request, 'app/detail.html', {'video': video['items'][0]})
 
     # return render(request, 'app/detail.html')
+
+
+def search(request):
+    term = request.GET.get('q')
+    filename = f"videos_{term}_data.pickle"
+
+    if os.path.exists(filename):
+        videos = load_data_from_pickle(filename)
+    else:        
+        youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
+        videos = youtube.search().list(
+            part='snippet', type='video', q=term, maxResults=10
+        ).execute()
+
+        for video in videos['items']:
+            video['channelData'] = get_video_channel_data(video['snippet']['channelId'])['items'][0]
+            # print(video['channelData'])
+            video['snippet']['publishTime'] = parse_datetime(video['snippet']['publishTime'])
+
+        save_data_to_pickle(filename, videos)
+
+    return render(request, 'app/search.html', {'videos': videos, 'search': term})
+
+    return render(request, 'app/search.html')
