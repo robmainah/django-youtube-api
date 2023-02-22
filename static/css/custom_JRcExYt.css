@@ -1,0 +1,10 @@
+.main_search {
+  width: 320px; }
+
+.youtube-iframe {
+  height: 700px; }
+  @media (max-width: 768px) {
+    .youtube-iframe {
+      height: 500px; } }
+
+/*# sourceMappingURL=custom.css.map */

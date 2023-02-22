@@ -1,0 +1,46 @@
+.main_search {
+  width: 320px; }
+
+.youtube-iframe {
+  height: 900px; }
+  @media (max-width: 1350px) {
+    .youtube-iframe {
+      height: 720px; } }
+  @media (max-width: 1280px) {
+    .youtube-iframe {
+      height: 570px; } }
+  @media (max-width: 1024px) {
+    .youtube-iframe {
+      height: 420px; } }
+  @media (max-width: 768px) {
+    .youtube-iframe {
+      height: 350px; } }
+  @media (max-width: 620px) {
+    .youtube-iframe {
+      height: 340px; } }
+  @media (max-width: 610px) {
+    .youtube-iframe {
+      height: 330px; } }
+  @media (max-width: 595px) {
+    .youtube-iframe {
+      height: 320px; } }
+  @media (max-width: 580px) {
+    .youtube-iframe {
+      height: 315px; } }
+  @media (max-width: 545px) {
+    .youtube-iframe {
+      height: 300px; } }
+  @media (max-width: 500px) {
+    .youtube-iframe {
+      height: 290px; } }
+  @media (max-width: 475px) {
+    .youtube-iframe {
+      height: 250px; } }
+  @media (max-width: 420px) {
+    .youtube-iframe {
+      height: 230px; } }
+  @media (max-width: 380px) {
+    .youtube-iframe {
+      height: 210px; } }
+
+/*# sourceMappingURL=custom.css.map */

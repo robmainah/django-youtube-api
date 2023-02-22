@@ -1,0 +1,25 @@
+.main_search {
+  width: 320px; }
+
+.youtube-iframe {
+  height: 420px; }
+  @media (max-width: 768px) {
+    .youtube-iframe {
+      height: 350px; } }
+  @media (max-width: 620px) {
+    .youtube-iframe {
+      height: 340px; } }
+  @media (max-width: 610px) {
+    .youtube-iframe {
+      height: 330px; } }
+  @media (max-width: 595px) {
+    .youtube-iframe {
+      height: 320px; } }
+  @media (max-width: 580px) {
+    .youtube-iframe {
+      height: 315px; } }
+  @media (max-width: 520px) {
+    .youtube-iframe {
+      height: 300px; } }
+
+/*# sourceMappingURL=custom.css.map */
