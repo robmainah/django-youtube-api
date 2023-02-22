@@ -2,8 +2,7 @@
 {% load humanize %}
 
 {% block content %}
-<!-- <main class="border border-slate-600 mt-4 p-2"> -->
-<ul>
+<ul class="mb-10">
     {% for video in videos.items %}
         {% include './loop/item.html' %}
     {% endfor %}

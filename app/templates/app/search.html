@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% block head_title %} {{ search }} {% endblock %}
 
 {% block content %}
-    <ul>
+    <ul class="mb-10">
         {% for video in videos.items %}
             {% include './loop/item.html' %}
         {% endfor %}
