@@ -69,6 +69,10 @@ def single_video(request, video_id):
             part='snippet, statistics, player', id=video_id, maxResults=1,
         ).execute()
 
+        # print(video['items'][0]['snippet']['publishedAt'])
+        video['items'][0]['channelData'] = get_video_channel_data(video['items'][0]['snippet']['channelId'])['items'][0]
+        video['items'][0]['snippet']['publishedAt'] = parse_datetime(video['items'][0]['snippet']['publishedAt'])
+
         # print(video['items'])
         save_data_to_pickle(filename, video)
 
@@ -86,7 +90,7 @@ def search(request):
     else:        
         youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
         videos = youtube.search().list(
-            part='snippet', type='video', q=term, maxResults=10
+            part='snippet', type='video', q=term, maxResults=10, regionCode='KEN'
         ).execute()
 
         for video in videos['items']:
