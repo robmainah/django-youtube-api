@@ -11,7 +11,6 @@ def home(request):
 
 def single_video(request, video_id):
     filename = f'video_{video_id}.pickle'
-
     video = get_data('', filename, video_id)
 
     return render(request, 'app/detail.html', {'video': video['items'][0]})

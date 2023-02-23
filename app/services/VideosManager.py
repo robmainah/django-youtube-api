@@ -7,11 +7,7 @@ def get_data(term: str, filename: str, video_id=None) -> object:
     if os.path.exists(filename):
         data = load_data(filename)
     else:
-        if video_id:
-            data = get_single_video(video_id)
-        else:
-            data = get_videos_data(term)
-
+        data = get_single_video(video_id) if video_id else get_videos_data(term)
         save_data(filename, data)
 
     return data
