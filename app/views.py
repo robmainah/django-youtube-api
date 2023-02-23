@@ -27,35 +27,50 @@ def parse_datetime(date_time):
     return datetime.fromisoformat(date_time)
 
 
-def get_video_channel_data(channel_id):
+def get_video_channel_data(channel_ids):
     youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
     return youtube.channels().list(
-        id=channel_id, part='snippet',
+        id=channel_ids, part='snippet', maxResults=50
     ).execute()
-    
+
+
+def get_channel_ids(videos):
+    return [video['snippet']['channelId'] for video in videos]
+
+
+def get_video_ids(videos):
+    return [video['id']['videoId'] for video in videos]
+
+
+def get_channel_index(video, channels_data):
+    for element, channel in enumerate(channels_data['items']):
+        if channel['id'] == video['snippet']['channelId']:
+            return element
+    return None
+    # return next((element for element, channel in enumerate(channels_data['items']) if channel['id'] == video['snippet']['channelId']), None)
+
 
 def home(request):
-    filename = 'videos_data.pickle'
+    term = 'avengers'
+    filename = f'videos_{term}_data.pickle'
 
     if os.path.exists(filename):
         videos = load_data_from_pickle(filename)
     else:
-        term = 'avengers'
         youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
         videos = youtube.search().list(
             part='snippet', type='video', q=term, maxResults=50
-        ).execute()        
+        ).execute()
+
+        channels_data = get_video_channel_data(get_channel_ids(videos['items']))
 
         for video in videos['items']:
-            video['channelData'] = get_video_channel_data(video['snippet']['channelId'])['items'][0]
-            # print(video['channelData'])
+            video['channelData'] = channels_data['items'][get_channel_index(video, channels_data)]
             video['snippet']['publishTime'] = parse_datetime(video['snippet']['publishTime'])
 
         save_data_to_pickle(filename, videos)
 
     return render(request, 'app/index.html', {'videos': videos})
-    
-    # return render(request, 'app/index.html')
 
 
 def single_video(request, video_id):
@@ -66,20 +81,15 @@ def single_video(request, video_id):
     else:
         youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
         video = youtube.videos().list(
-            part='snippet, statistics, player', id=video_id, maxResults=1,
+            part='contentDetails, snippet, statistics, player', id=video_id, maxResults=1,
         ).execute()
 
-        # print(video['items'][0]['snippet']['publishedAt'])
         video['items'][0]['channelData'] = get_video_channel_data(video['items'][0]['snippet']['channelId'])['items'][0]
         video['items'][0]['snippet']['publishedAt'] = parse_datetime(video['items'][0]['snippet']['publishedAt'])
 
-        # print(video['items'])
         save_data_to_pickle(filename, video)
 
     return render(request, 'app/detail.html', {'video': video['items'][0]})
-
-    # return render(request, 'app/detail.html')
-
 
 def search(request):
     term = request.GET.get('q') # + " -citizen -ntv"
@@ -100,6 +110,8 @@ def search(request):
 
         save_data_to_pickle(filename, videos)
 
+
+    print(videos['items'])
     return render(request, 'app/search.html', {'videos': videos, 'search': term})
 
     return render(request, 'app/search.html')
