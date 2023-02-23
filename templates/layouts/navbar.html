@@ -1,0 +1,24 @@
+{% load static %}
+
+{% block content %}
+    <nav class="border-b-2 border-gray-600 py-4 shadow md:flex md:items-center md:justify-between">
+        <div class="flex justify-between items-center">
+            <a href="{% url 'home' %}">
+                <span class="text-2xl font-bold text-red-600  font-[Poppins]">
+                    <img class="h-8 inline cursor-pointer mr-1" src="{% static 'media/images/youtube-icon.png' %}">
+                    YouTube <span class="tracking-[0.07rem]">Filters</span>
+                </span>
+            </a>
+        </div>
+        <div class="static md:w-[320px] flex justify-center mt-4 md:mt-0">
+            <form action="{% url 'search' %}" method="get" class="relative w-full">
+                <input type="search" name="q" placeholder="Search" value="{{ search }}" autocomplete="off"
+                    class="p-2 border border-slate-600 rounded bg-slate-900 focus:outline-none focus:border-sky-500 w-full">
+
+                <button type="submit" class="right-0 pb-1 pt-2 px-3 self-center absolute bg-red-800 rounded" title="Search">
+                    <ion-icon name="search-outline" class="text-2xl font-bold"></ion-icon>
+                </button>
+            </form>
+        </div>
+    </nav>
+{% endblock %}
