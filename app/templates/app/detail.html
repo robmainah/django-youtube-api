@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 {% load humanize %}
 
 {% block head_title %} {{ video.snippet.title }} {% endblock %}
@@ -19,7 +20,7 @@
             </a>
 
             <p class="mt-2 text-base text-slate-200 font-medium">
-                <span>{{ video.statistics.viewCount|intcomma }} views |</span> 
+                <span>{{ video.statistics.viewCount|human_readable }} views |</span> 
                 <small class="text-slate-200 text-sx sm:text-sm mt-1">{{ video.snippet.publishedAt|naturaltime }}</small>
             </p>
 

@@ -1,3 +1,4 @@
+{% load custom_filters %}
 {% load humanize %}
 
 {% block content %}
@@ -15,7 +16,7 @@
             </a>
 
             <p class="mt-2 text-gray-400 font-medium">
-                <small>{{ video.videoData.statistics.viewCount|intcomma }} views |</small>
+                <small>{{ video.videoData.statistics.viewCount|human_readable }} views |</small>
                 <small>{{ video.snippet.publishTime|naturaltime }}</small>
             </p>
 
