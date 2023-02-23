@@ -2,7 +2,7 @@
 
 {% block content %}
     <li class=" border-slate-700 mt-5 flex">
-        <div class="w-64 sm:w-72 mr-3">
+        <div class="w-64 sm:w-72 mr-4">
             <a href="{% url 'single-video' video.id.videoId %}" rel="nofollow noreferrer">
                 <img class="rounded-lg h-36 sm:h-44" src="{{ video.snippet.thumbnails.medium.url }}" alt="{{ video.snippet.title }} image" title="{{ video.snippet.title }}">
             </a>
@@ -14,7 +14,10 @@
                 {% endautoescape %}
             </a>
 
-            <small class="text-gray-400 text-sx sm:text-sm mt-1">{{ video.snippet.publishTime|naturaltime }}</small>
+            <p class="mt-2 text-gray-400 font-medium">
+                <small>{{ video.videoData.statistics.viewCount|intcomma }} views |</small>
+                <small>{{ video.snippet.publishTime|naturaltime }}</small>
+            </p>
 
             <div class="my-2">
                 <a class="flex items-center" href="https://www.youtube.com/channel/{{ video.channelData.id }}" target="_blank" rel="nofollow noreferrer">

@@ -34,6 +34,13 @@ def get_video_channel_data(channel_ids):
     ).execute()
 
 
+def get_video_data(video_ids):
+    youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
+    return youtube.videos().list(
+        id=video_ids, part='statistics'
+    ).execute()
+
+
 def get_channel_ids(videos):
     return [video['snippet']['channelId'] for video in videos]
 
@@ -50,22 +57,33 @@ def get_channel_index(video, channels_data):
     # return next((element for element, channel in enumerate(channels_data['items']) if channel['id'] == video['snippet']['channelId']), None)
 
 
+def get_video_index(video, videos_data):
+    for element, channel in enumerate(videos_data['items']):
+        if channel['id'] == video['id']['videoId']:
+            return element
+    return None
+    # return next((element for element, channel in enumerate(channels_data['items']) if channel['id'] == video['snippet']['channelId']), None)
+
+
 def home(request):
     term = 'avengers'
     filename = f'videos_{term}_data.pickle'
 
     if os.path.exists(filename):
         videos = load_data_from_pickle(filename)
+        
     else:
         youtube = build('youtube', 'v3', developerKey=env('YOUTUBE_API_KEY'))
         videos = youtube.search().list(
             part='snippet', type='video', q=term, maxResults=50
         ).execute()
 
-        channels_data = get_video_channel_data(get_channel_ids(videos['items']))
+        channels_data = get_video_channel_data((',').join(get_channel_ids(videos['items'])))
+        videos_data = get_video_data((',').join(get_video_ids(videos['items'])))
 
         for video in videos['items']:
             video['channelData'] = channels_data['items'][get_channel_index(video, channels_data)]
+            video['videoData'] = videos_data['items'][get_video_index(video, videos_data)]
             video['snippet']['publishTime'] = parse_datetime(video['snippet']['publishTime'])
 
         save_data_to_pickle(filename, videos)
@@ -90,6 +108,7 @@ def single_video(request, video_id):
         save_data_to_pickle(filename, video)
 
     return render(request, 'app/detail.html', {'video': video['items'][0]})
+
 
 def search(request):
     term = request.GET.get('q') # + " -citizen -ntv"
