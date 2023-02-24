@@ -23,7 +23,7 @@ def get_channel_ids(videos):
 
 def get_video_data(video_ids):
     return youtube_build().videos().list(
-        id=video_ids, part='statistics'
+        id=video_ids, part='statistics, contentDetails',
     ).execute()
 
 
