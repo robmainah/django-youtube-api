@@ -7,13 +7,16 @@
 
 {% block content %}
     <div class="border border-slate-600 pb-5 mb-10 bg-gray-800 rounded">
-        <div class="mb-3 flex justify-end" onclick="hideDuration()">
-            <iframe width="100%" class="youtube-iframe pointer-events-none" frameborder="0" src="https://www.youtube.com/embed/{{ video.id }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            <span class="duration bg-black text-sm absolute self-end rounded px-1 mb-[0.2rem] mr-1">{{ video.contentDetails.duration|human_duration }}</span>
+        <div class="mb-3 flex justify-end" >
+            <iframe width="100%" class="youtube-iframe" frameborder="0" src="https://www.youtube.com/embed/{{ video.id }}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
 
         <div class="p-3">
-            <h1 class="text-lg font-medium text-slate-200 border-b border-slate-400 shadow pb-2">{{ video.snippet.title }}</h1>
+            <div class="text-lg font-medium  border-b border-slate-400 shadow pb-1 mb-3">
+                <h1 class="text-slate-200">{{ video.snippet.title }}</h1>
+                <p class="text-base text-slate-400">Duration: {{ video.contentDetails.duration|human_duration }}</p>
+            </div>
 
             <a class="flex items-center mt-2" href="https://www.youtube.com/channel/{{ video.snippet.channelId }}" target="_blank" rel="nofollow noreferrer">
                 <img class="h-9 w-9 rounded-full mr-2" src="{{ video.channelData.snippet.thumbnails.default.url }}" alt="{{ video.snippet.channelTitle }} image" title="{{ video.snippet.channelTitle }}" />
