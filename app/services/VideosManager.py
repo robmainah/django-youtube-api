@@ -10,7 +10,7 @@ def get_data(term: str, filename: str, video_id=None) -> object:
         data = get_single_video(video_id) if video_id else get_videos_data(term)
         save_data(filename, data)
 
-    return data
+    return sort_videos(data)
 
 
 def get_videos_data(term: str) -> object:
@@ -40,3 +40,31 @@ def get_single_video(video_id: str) -> object:
     video['items'][0]['snippet']['publishedAt'] = parse_datetime(video['items'][0]['snippet']['publishedAt'])
 
     return video
+
+
+def sort_videos(videos):
+    for video in videos['items']:
+        views_threshold = 10000
+        viewcount = int(video['videoData']['statistics']['viewCount'])
+
+        video['score'] = 1
+        if viewcount > views_threshold:
+            num_subs = int(video['channelData']['statistics']['subscriberCount'])
+            ratio = view_to_sub_ratio(viewcount, num_subs)
+            video['score'] = custom_score(viewcount, ratio)
+
+    videos['items'] = sorted(videos['items'], key=lambda x: int(x['score']), reverse=True)
+    return videos
+
+def view_to_sub_ratio(viewcount, num_subscribers):
+    if num_subscribers == 0:
+        return 0
+    else:
+        ratio = viewcount / num_subscribers
+        return ratio
+
+
+def custom_score(viewcount, ratio):
+    ratio = min(ratio, 5)
+    score = (viewcount * ratio) 
+    return score

@@ -17,6 +17,8 @@ def single_video(request, video_id):
 
 
 def search(request):
+    # def search():
+    # term = 'avengers' # + " -citizen -ntv"
     term = request.GET.get('q') # + " -citizen -ntv"
     filename = f"videos_{term.replace(' ', '_')}_data.pickle"
 
