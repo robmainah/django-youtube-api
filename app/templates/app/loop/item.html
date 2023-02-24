@@ -16,15 +16,16 @@
                 {% endautoescape %}
             </a>
 
-            <p class="mt-2 text-gray-400 font-medium">
-                <small>{{ video.videoData.statistics.viewCount|human_readable }} views |</small>
-                <small>{{ video.snippet.publishTime|naturaltime }}</small>
+            <p class="text-gray-400 font-medium">
+                <small>{{ video.videoData.statistics.viewCount|human_readable }} views</small>
+                <small>| {{ video.snippet.publishTime|naturaltime }}</small>
             </p>
 
             <div class="my-2">
-                <a class="flex items-center" href="https://www.youtube.com/channel/{{ video.channelData.id }}" target="_blank" rel="nofollow noreferrer">
+                <a class="flex items-center text-gray-400 text-sm" href="https://www.youtube.com/channel/{{ video.channelData.id }}" target="_blank" rel="nofollow noreferrer">
                     <img class="h-7 rounded-full mr-2" src="{{ video.channelData.snippet.thumbnails.default.url }}" alt="{{ video.snippet.channelTitle }} image" title="{{ video.snippet.channelTitle }}" />
-                    <small class="text-gray-400 text-sx sm:text-sm">{{ video.snippet.channelTitle }}</small>
+                    <span class="">{{ video.snippet.channelTitle }}</span>
+                    <span class="ml-1">| {{ video.channelData.statistics.subscriberCount|human_readable }} Subscribers</span>
                 </a>
             </div>
 

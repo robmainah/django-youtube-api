@@ -18,12 +18,17 @@
                 <p class="text-base text-slate-400">Duration: {{ video.contentDetails.duration|human_duration }}</p>
             </div>
 
-            <a class="flex items-center mt-2" href="https://www.youtube.com/channel/{{ video.snippet.channelId }}" target="_blank" rel="nofollow noreferrer">
+            <a class="flex max-w-max items-center mt-2 text-slate-300" href="https://www.youtube.com/channel/{{ video.snippet.channelId }}" target="_blank" rel="nofollow noreferrer">
                 <img class="h-9 w-9 rounded-full mr-2" src="{{ video.channelData.snippet.thumbnails.default.url }}" alt="{{ video.snippet.channelTitle }} image" title="{{ video.snippet.channelTitle }}" />
-                <small class="text-slate-200 text-sx sm:text-sm font-medium">{{ video.snippet.channelTitle }}</small>
+                <small class="text-sx sm:text-sm font-medium">
+                    {{ video.snippet.channelTitle }}
+                </small>
+                <small class="text-sx sm:text-sm font-medium ml-1">
+                    | {{ video.channelData.statistics.subscriberCount|human_readable }} Subscribers
+                </small>
             </a>
 
-            <p class="mt-2 text-base text-slate-200 font-medium">
+            <p class="mt-2 text-base text-slate-300 font-medium">
                 <span>{{ video.statistics.viewCount|human_readable }} views |</span> 
                 <small class="text-slate-200 text-sx sm:text-sm mt-1">{{ video.snippet.publishedAt|naturaltime }}</small>
             </p>

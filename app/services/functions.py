@@ -13,7 +13,7 @@ def youtube_build():
 
 def get_channel_data(channel_ids):
     return youtube_build().channels().list(
-        id=channel_ids, part='snippet', maxResults=50
+        id=channel_ids, part='snippet, statistics', maxResults=50
     ).execute()
 
 
