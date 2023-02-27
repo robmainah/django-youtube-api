@@ -1,0 +1,64 @@
+{% load static %}
+
+{% block content %}
+    <div class="flex cursor-pointer" onclick="toggleFilters()">
+        <div class="flex px-2 rounded-full hover:bg-red-600 border border-slate-500 hover:border-red-600">
+            <ion-icon class="mr-1" name="filter-outline" size="large"></ion-icon>
+            <span class="font-medium pt-0.5 tracking-wider">Filters</span>
+        </div>
+    </div>
+    <div class="main_filters hidden-- bg-slate-900 px-3 pt-3 pb-5 mt-2 rounded">
+        <form action="/search?q={{ search_query }}" method="get" class="w-full">
+            <input type="hidden" name="q" value="{{ search_query }}">
+            
+            <div class="flex flex-col sm:flex-row">
+                <div class="sm:w-1/2 sm:mr-2">
+                    <p class="mb-1">Words to Exclude</p>
+                    <input type="text" name="excludes" placeholder="word1, word2" value="{{ parameters.excludes }}"
+                        class="p-1 border border-slate-600 rounded focus:outline-none focus:border-sky-500 bg-slate-900 w-full" />
+                    <p class="mt-1 text-xs text-slate-300">Write words to exclude from the results</p>
+                </div>
+                <div class="sm:w-1/2 mt-2 sm:mt-0 sm:ml-2">
+                    <p class="mb-1">Duration</p>
+                    <select name="duration"
+                        class="p-1 border border-slate-600 rounded focus:outline-none focus:border-sky-500 bg-slate-900 w-full">
+                        <option value="" selected disabled>Select Duration</option>
+                        <option value="short">0-4 Minutes</option>
+                        <option value="medium">4-20 Minutes</option>
+                        <option value="long">Over 20 Minutes</option>
+                    </select>
+                    <p class="mt-1 text-xs text-slate-300">How long should the videos be?</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row mt-4">
+                <div class="sm:w-1/2 sm:mr-2">
+                    <div class="flex space-x-3 sm:space-x-2">
+                        <div class="w-1/2">
+                            <p class="mb-1">Start Date</p>
+                            <input type="date" name="start_date" value="{{ parameters.start_date }}" class="p-1 border border-slate-600 rounded focus:outline-none focus:border-sky-500 bg-slate-900 w-full">
+                        </div>
+                        <div class="w-1/2">
+                            <p class="mb-1">End Date</p>
+                            <input type="date" name="end_date" value="{{ parameters.end_date }}" class="p-1 border border-slate-600 rounded focus:outline-none focus:border-sky-500 bg-slate-900 w-full">
+                        </div>
+                    </div>
+                </div>
+                <div class="sm:w-1/2 mt-2 sm:mt-0 sm:ml-2">
+                    <p class="mb-1">Sort By</p>
+                    <select name="sort"
+                        class="p-1 border border-slate-600 rounded focus:outline-none focus:border-sky-500 bg-slate-900 w-full">
+                        <option value="" selected disabled>Select Sort</option>
+                        <option value="relevance">None</option>
+                        <option value="relevance">Relevance</option>
+                        <option value="asc">Title A-Z</option>
+                        <option value="desc">Title Z-A</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex mt-4 justify-end">
+                <button type="submit" class="px-4 py-1.5 font-medium border  bg-red-700 border-red-700 text-white rounded tracking-wider">Filter</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

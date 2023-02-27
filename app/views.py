@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .services.VideosManager import get_data
+from datetime import datetime
+from django.contrib import messages
 
 
 def home(request):
@@ -17,8 +19,50 @@ def single_video(request, video_id):
 
 
 def search(request):
-    term = request.GET.get('q') # + " -citizen -ntv"
-    filename = f"videos_{term.replace(' ', '_')}_data.pickle"
+    term = request.GET.get('q', '').strip() # + " -citizen -ntv"
+    excludes = request.GET.get('excludes')  # + " -citizen -ntv"
+    start_date = request.GET.get('start_date')  # + " -citizen -ntv"
+    end_date = request.GET.get('end_date')  # + " -citizen -ntv"
 
-    return render(request, 'app/search.html', {'search': term, 'videos': get_data(term, filename)})
+    if term:
+        term.replace(' ', '_')
+
+    parameters = {}
+
+    if request.GET.get('sort'):
+        parameters['sort'] = request.GET.get('sort')
+
+    if request.GET.get('duration'):
+        parameters['duration'] = request.GET.get('duration')
+
+    try:
+        if start_date:
+            parameters['publishedAfter'] = datetime.strptime(start_date, '%Y-%m-%d').strftime('%Y-%m-%dT%H:%M:%SZ')
+    except:
+        messages.error(request, "Please select correct start date")
+
+    try:
+        if end_date:
+            parameters['publishedBefore'] = datetime.strptime(end_date, '%Y-%m-%d').strftime('%Y-%m-%dT%H:%M:%SZ')
+    except:
+        messages.error(request, "Please select correct end date")
+
+    parameters['q'] = term
+
+    if excludes is not None:
+        formatted_excludes = []
+        for word in excludes.replace(',', ' ').split():
+            formatted_excludes.append(''.join(('-', word)))
+
+        parameters['q'] = term + ' ' + ' '.join(formatted_excludes)
+
+    filename = f"videos_{parameters['q'].replace(' ', '_')}_data.pickle"
+
+    context = {
+        'search_query': term,
+        'parameters': request.GET,
+        'videos': get_data(parameters, filename)
+    }
+
+    return render(request, 'app/search.html', context)
 

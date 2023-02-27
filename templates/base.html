@@ -10,11 +10,21 @@
     {% include 'layouts/css.html' %}
 </head>
 
-<body class="bg-slate-900 text-white">
+<body class="bg-slate-800 text-white">
     <div class="container p-4 mx-auto">
         {% include 'layouts/navbar.html' %}        
 
         <div class="mt-4">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <div class="border border-red-400 bg-red-100 text-red-700 rounded p-3 mb-4">
+                            <p class="font-medium">{{ message }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
             {% block content %} {% endblock %}
         </div>
     </div>

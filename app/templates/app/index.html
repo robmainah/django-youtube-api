@@ -2,9 +2,11 @@
 {% load humanize %}
 
 {% block content %}
-<ul class="mb-10">
-    {% for video in videos.items %}
-        {% include './loop/item.html' %}
-    {% endfor %}
-</ul>
+    <div class="mb-10">
+        <ul>
+            {% for video in videos.items %}
+                {% include './loop/item.html' %}
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

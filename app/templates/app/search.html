@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
-{% block head_title %} {{ search }} {% endblock %}
+{% block head_title %} {{ search_query }} {% endblock %}
 
 {% block content %}
-    <ul class="mb-10">
-        {% for video in videos.items %}
-            {% include './loop/item.html' %}
-        {% endfor %}
-    </ul>
+    <div class="mb-10">
+        {% include './filters.html' %}
+        
+        <ul>
+            {% for video in videos.items %}
+                {% include './loop/item.html' %}
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
