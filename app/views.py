@@ -9,9 +9,19 @@ def home(request):
         'q': ''
     }
 
+    if request.GET.get('page'):
+        parameters['pageToken'] = request.GET.get('page')
+
     filename = f"videos_{parameters['q']}_data.pickle"
 
-    return render(request, 'app/index.html', {'videos': get_data(parameters, filename)})
+    results = get_data(parameters, filename)
+
+    context = {
+        'videos': results,
+        'next_page_token': results.get('nextPageToken')
+    }
+
+    return render(request, 'app/index.html', context)
 
 
 def single_video(request, video_id):
@@ -22,10 +32,10 @@ def single_video(request, video_id):
 
 
 def search(request):
-    term = request.GET.get('q', '').strip() # + " -citizen -ntv"
-    excludes = request.GET.get('excludes')  # + " -citizen -ntv"
-    start_date = request.GET.get('start_date')  # + " -citizen -ntv"
-    end_date = request.GET.get('end_date')  # + " -citizen -ntv"
+    term = request.GET.get('q', '').strip()
+    excludes = request.GET.get('excludes')
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
 
     if term:
         term.replace(' ', '_')
@@ -36,6 +46,9 @@ def search(request):
 
     if request.GET.get('sort') and request.GET.get('sort') == 'default':
         parameters['order'] = 'relevance'
+
+    if request.GET.get('page'):
+        parameters['pageToken'] = request.GET.get('page')
 
     try:
         if start_date:
@@ -60,10 +73,13 @@ def search(request):
 
     filename = f"videos_{parameters['q'].replace(' ', '_')}_data.pickle"
 
+    results = get_data(parameters, filename)
+
     context = {
+        'videos': results,
         'search_query': term,
         'parameters': request.GET,
-        'videos': get_data(parameters, filename)
+        'next_page_token': results.get('nextPageToken')
     }
 
     return render(request, 'app/search.html', context)

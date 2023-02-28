@@ -8,4 +8,26 @@
         filters = document.querySelector('.main_filters')
         filters.classList.toggle('hidden')
     }
+    
+    function getNextData(token) {        
+        const link = window.location
+
+        terms = link.search.replace('?', '').split('&')
+        
+        terms.forEach((term, index) => {
+            if (term.startsWith('page')) {
+                return terms[index] = 'page=' + token
+            }            
+        });
+
+        index = terms.findIndex(term => term.startsWith('page'))
+
+        if (index == -1) {
+            terms.push('page=' + token)
+        } else {
+            terms[index] = 'page=' + token
+        }
+
+        link.search = '?' + terms.join('&')
+    }
 </script>

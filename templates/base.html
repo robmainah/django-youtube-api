@@ -26,6 +26,14 @@
             {% endif %}
 
             {% block content %} {% endblock %}
+
+            {% if next_page_token %}
+                <div class="flex my-5 justify-center items-center">
+                    <div class="rounded-full bg-sky-700 border border-sky-700 font-medium tracking-wider py-1.5 px-4 cursor-pointer" onclick="getNextData('{{ next_page_token }}')">
+                        Next
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 
