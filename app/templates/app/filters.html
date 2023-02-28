@@ -1,8 +1,8 @@
 {% load static %}
 
 {% block content %}
-    <div class="flex cursor-pointer" onclick="toggleFilters()">
-        <div class="flex px-2 rounded-full hover:bg-red-600 border border-slate-500 hover:border-red-600">
+    <div class="flex">
+        <div class="flex px-2 rounded-full hover:bg-red-600 border border-slate-500 hover:border-red-600 cursor-pointer" onclick="toggleFilters()">
             <ion-icon class="mr-1" name="filter-outline" size="large"></ion-icon>
             <span class="font-medium pt-0.5 tracking-wider">Filters</span>
         </div>
@@ -10,7 +10,7 @@
     <div class="main_filters hidden-- bg-slate-900 px-3 pt-3 pb-5 mt-2 rounded">
         <form action="/search?q={{ search_query }}" method="get" class="w-full">
             <input type="hidden" name="q" value="{{ search_query }}">
-            
+
             <div class="flex flex-col sm:flex-row">
                 <div class="sm:w-1/2 sm:mr-2">
                     <p class="mb-1">Words to Exclude</p>
@@ -23,9 +23,9 @@
                     <select name="duration"
                         class="p-1 border border-slate-600 rounded focus:outline-none focus:border-sky-500 bg-slate-900 w-full">
                         <option value="" selected disabled>Select Duration</option>
-                        <option value="short">0-4 Minutes</option>
-                        <option value="medium">4-20 Minutes</option>
-                        <option value="long">Over 20 Minutes</option>
+                        <option value="short" {% if parameters.duration == 'short' %} selected {% endif %}>0-4 Minutes</option>
+                        <option value="medium" {% if parameters.duration == 'medium' %} selected {% endif %}>4-20 Minutes</option>
+                        <option value="long" {% if parameters.duration == 'long' %} selected {% endif %}>Over 20 Minutes</option>
                     </select>
                     <p class="mt-1 text-xs text-slate-300">How long should the videos be?</p>
                 </div>
@@ -48,10 +48,10 @@
                     <select name="sort"
                         class="p-1 border border-slate-600 rounded focus:outline-none focus:border-sky-500 bg-slate-900 w-full">
                         <option value="" selected disabled>Select Sort</option>
-                        <option value="relevance">None</option>
-                        <option value="relevance">Relevance</option>
-                        <option value="asc">Title A-Z</option>
-                        <option value="desc">Title Z-A</option>
+                        <option value="default" {% if parameters.sort == 'default' %} selected {% endif %}>Default</option>
+                        <option value="relevance" {% if parameters.sort == 'relevance' %} selected {% endif %}>Relevance</option>
+                        <option value="title" {% if parameters.sort == 'title' %} selected {% endif %}>Title A-Z</option>
+                        <option value="date" {% if parameters.sort == 'date' %} selected {% endif %}>Date Created</option>
                     </select>
                 </div>
             </div>
