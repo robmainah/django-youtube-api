@@ -4,7 +4,10 @@ from .PickleData import save_data, load_data
 
 
 def get_data(params: object, filename: str, video_id=None) -> object:
-    data =  get_videos_data(params)
+    if video_id:
+        data = get_single_video(video_id) 
+    else:
+        data = get_videos_data(params)
     # if os.path.exists(filename):
     #     data = load_data(filename)
     # else:
