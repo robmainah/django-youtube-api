@@ -5,10 +5,13 @@ from django.contrib import messages
 
 
 def home(request):
-    term = ''
-    filename = f'videos_{term}_data.pickle'
+    parameters = {
+        'q': ''
+    }
 
-    return render(request, 'app/index.html', {'videos': get_data(term, filename)})
+    filename = f"videos_{parameters['q']}_data.pickle"
+
+    return render(request, 'app/index.html', {'videos': get_data(parameters, filename)})
 
 
 def single_video(request, video_id):
@@ -27,13 +30,12 @@ def search(request):
     if term:
         term.replace(' ', '_')
 
-    parameters = {}
+    parameters = {
+        'videoDuration': request.GET.get('duration', 'any'),
+    }
 
-    if request.GET.get('sort'):
-        parameters['sort'] = request.GET.get('sort')
-
-    if request.GET.get('duration'):
-        parameters['duration'] = request.GET.get('duration')
+    if request.GET.get('sort') and request.GET.get('sort') == 'default':
+        parameters['order'] = 'relevance'
 
     try:
         if start_date:
@@ -54,7 +56,7 @@ def search(request):
         for word in excludes.replace(',', ' ').split():
             formatted_excludes.append(''.join(('-', word)))
 
-        parameters['q'] = term + ' ' + ' '.join(formatted_excludes)
+        parameters['q'] = (term + ' ' + ' '.join(formatted_excludes)).strip()
 
     filename = f"videos_{parameters['q'].replace(' ', '_')}_data.pickle"
 

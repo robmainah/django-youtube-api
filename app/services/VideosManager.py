@@ -4,19 +4,22 @@ from .PickleData import save_data, load_data
 
 
 def get_data(params: object, filename: str, video_id=None) -> object:
-    if os.path.exists(filename):
-        data = load_data(filename)
-    else:
-        data = get_single_video(video_id) if video_id else get_videos_data(params)
-        save_data(filename, data)
+    data =  get_videos_data(params)
+    # if os.path.exists(filename):
+    #     data = load_data(filename)
+    # else:
+    #     data = get_single_video(video_id) if video_id else get_videos_data(params)
+    #     save_data(filename, data)
 
     return data
 
 
 def get_videos_data(params: object) -> object:
-    videos = youtube_build().search().list(
-        part='snippet', type='video', q=params['q'], maxResults=50
-    ).execute()
+    data = {**params, **{
+            'part': 'snippet', 'type': 'video', 'maxResults': 50
+        }}
+
+    videos = youtube_build().search().list(**data).execute()
 
     channels_data = get_channel_data((',').join(get_channel_ids(videos['items'])))
     videos_data = get_video_data((',').join(get_video_ids(videos['items'])))
