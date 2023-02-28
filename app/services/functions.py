@@ -2,9 +2,8 @@ from datetime import datetime
 from googleapiclient.discovery import build
 import environ
 
-
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env('./.env')
 
 
 def youtube_build():
